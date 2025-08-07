@@ -113,7 +113,7 @@ vsm <- function(..., Gu=NULL, buildGu=TRUE, meN=1, meTheta=NULL, meThetaC=NULL, 
           vv <- which(Z0[,j] != 0) # the indices of this block (may be non-contiguous)
           partitionsR[[j]] <- vv   # store all indices, not just first/last
           Z[[counter]] <- Z1prov[vv, vv, drop=FALSE]
-        }}else{
+        }else{
         provZ0iCol <- Matrix(Z0[,j]) %*% Matrix(1,1,ncol(Z1prov))
         Z1provZ0iCol <- Z1prov * provZ0iCol
         if(!inherits(Z1provZ0iCol, "dgCMatrix")){
