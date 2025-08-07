@@ -110,11 +110,10 @@ vsm <- function(..., Gu=NULL, buildGu=TRUE, meN=1, meTheta=NULL, meThetaC=NULL, 
       Z1prov <- init[[k]]$Z # main effect matrix
       cn <- colnames(Z1prov)
       if(is.residual){
-        vv <- which(Z0[,j] != 0) # which rows belong to the ith environment
-        partitionsR[[j]] <- matrix(c(vv[1],vv[length(vv)]),nrow=1)
-        Z[[counter]] <- Z1prov[vv,vv]
-        # Z[[counter]] <- Z1prov %*% Diagonal(x=Z0[,j])
-      }else{
+          vv <- which(Z0[,j] != 0) # the indices of this block (may be non-contiguous)
+          partitionsR[[j]] <- vv   # store all indices, not just first/last
+          Z[[counter]] <- Z1prov[vv, vv, drop=FALSE]
+        }}else{
         provZ0iCol <- Matrix(Z0[,j]) %*% Matrix(1,1,ncol(Z1prov))
         Z1provZ0iCol <- Z1prov * provZ0iCol
         if(!inherits(Z1provZ0iCol, "dgCMatrix")){
@@ -151,12 +150,6 @@ vsm <- function(..., Gu=NULL, buildGu=TRUE, meN=1, meTheta=NULL, meThetaC=NULL, 
   }
   Zind <- rep(1,length(Z))
   
-  # error message when units are not sorted by the factor desired
-  if(is.residual){
-    if( mean(table(unlist(lapply(partitionsR, function(x){x[1]:x[2]})))) > 1 ){
-      stop("Please sort your records according to the factor you are structuring your residual units.", call. = FALSE)
-    }
-  }
   ######################################
   ## meN adjustment
   ## modify theta and thetaC according to the number of mainEffect matrices
