@@ -289,12 +289,12 @@ mmes <- function(fixed, random, rcov, data, W,
       returnScaled=FALSE # return scaled variance parameters
       # translate vsm S into vsm R
       R <- rep(list(Matrix::Diagonal(x= rep(0, nrow(yvar)) )), length(S) )
-for(iR in 1:length(S)){ # iR=1
-  idx <- as.vector(Spartitions[[iR]])
-  if(length(idx) > 0) {
-    R[[iR]][idx, idx] <- S[[iR]]
-  }
-}
+      for(iR in 1:length(S)){ # iR=1
+        idx <- as.vector(Spartitions[[iR]])
+        if(length(idx) > 0) {
+          R[[iR]][idx, idx] <- S[[iR]]
+        }
+      }
       R <- lapply(R,function(x){as(as(as( x,  "dMatrix"), "generalMatrix"), "CsparseMatrix")})
       # translate vsm Z into vsm Z
       
