@@ -1,4 +1,4 @@
-useDynLib(sommer, .registration=TRUE)
+useDynLib(sommermanu, .registration=TRUE)
 importFrom(Rcpp, evalCpp)
 #exportPattern("^[[:alpha:]]+")
 
